@@ -1,0 +1,20 @@
+<!doctype html>
+{{- $lang := site.LanguageCode | default "en-us" -}}
+<html lang="{{ $lang }}" dir="ltr" data-wc-theme-default="light">
+{{ partial "site_head" . }}
+  <body class="page-wrapper" id="top">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="page-header {{ if site.Params.header.navbar.fixed_to_top }}sticky top-0 z-30{{ end }}">
+      {{ if (site.Params.header.navbar.enable | default true) }}
+        {{ partial "components/headers/navbar.html" . }}
+      {{ end }}
+    </div>
+    <main id="main" class="page-body">
+      {{ block "main" . }}{{ end }}
+    </main>
+    <div class="page-footer">
+      {{ partial "site_footer" . }}
+    </div>
+    {{ partial "functions/get_hook" (dict "hook" "body-end" "context" .) }}
+  </body>
+</html>

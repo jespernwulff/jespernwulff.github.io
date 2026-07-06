@@ -1,0 +1,2 @@
+{{- /* Subpath-safe URL for files under static/. Usage: {{< staticrel "files/foo.pdf" >}} */ -}}
+{{- (.Get 0) | relURL -}}

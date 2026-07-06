@@ -1,0 +1,13 @@
+{{- /* Returns a human label for a page based on publication_types (precedence over section). */ -}}
+{{- $p := . -}}
+{{- $t := $p.Params.publication_types | default slice -}}
+{{- $k := "Paper" -}}
+{{- if in $t "data" -}}{{- $k = "Dataset" -}}
+{{- else if or (in $t "software") (eq $p.Section "software") -}}{{- $k = "Software" -}}
+{{- else if in $t "book" -}}{{- $k = "Book" -}}
+{{- else if or (in $t "book_chapter") (in $t "chapter") -}}{{- $k = "Book" -}}
+{{- else if in $t "patent" -}}{{- $k = "Patent" -}}
+{{- else if in $t "court_brief" -}}{{- $k = "Court Brief" -}}
+{{- else if in $t "presentation" -}}{{- $k = "Presentation" -}}
+{{- end -}}
+{{- $k -}}

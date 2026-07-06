@@ -1,0 +1,88 @@
+{{ define "main" }}
+{{ $photo := resources.Get "images/jesper-wulff.jpg" }}
+
+<section class="wrap home">
+  <div class="hero">
+    {{ with $photo }}
+      <img class="hero__photo" src="{{ (.Fill "400x400 Center q88").RelPermalink }}" width="200" height="200"
+           alt="Portrait of {{ site.Params.author_name }}, {{ site.Params.institution }}">
+    {{ else }}
+      <span class="hero__photo person-monogram" style="width:200px;height:200px;font-size:3.5rem" aria-hidden="true">JW</span>
+    {{ end }}
+    <div class="hero__body">
+      <h1 class="hero__name">{{ site.Params.author_name }}</h1>
+      <p class="hero__role">{{ site.Params.role }}</p>
+      <p class="hero__inst"><a href="{{ site.Params.institution_url }}" target="_blank" rel="noopener">{{ site.Params.institution }}</a></p>
+      {{ with .Params.intro }}<p class="hero__intro">{{ . }}</p>{{ end }}
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="{{ "/bio/" | relLangURL }}">Bio &amp; C.V.</a>
+        <a class="btn btn--ghost" href="{{ "/publication/" | relLangURL }}">Writings</a>
+        <span class="hero__icons">
+          {{ range site.Params.profiles }}
+            <a class="icon-link" href="{{ .url }}" aria-label="{{ .name }}"{{ if not (hasPrefix .url "mailto:") }} target="_blank" rel="noopener"{{ end }}>{{ partial "social-icon.html" .icon }}</a>
+          {{ end }}
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div id="research-areas">
+    <div class="section-head">
+      <h2 class="section-title">Research areas</h2>
+      <p class="section-sub">Open an area to see representative work.</p>
+    </div>
+    <div class="areas-groups">
+      {{ range site.Data.research_areas.groups }}
+        <div class="areas-col">
+          <h3 class="areas-group-title">{{ .name }}</h3>
+          <div class="areas">
+            {{ range .areas }}
+              <details class="area">
+                <summary>
+                  <span>{{ .name }}</span>
+                  <span class="area__meta">{{ len .papers }} <span class="area__chevron" aria-hidden="true">&rsaquo;</span></span>
+                </summary>
+                <div class="area__body">
+                  {{ with .summary }}<p class="area__desc">{{ . }}</p>{{ end }}
+                  <ul class="area-pubs">
+                    {{ range .papers }}
+                      {{ with site.GetPage (printf "/publication/%s" .) }}
+                        {{ $st := .Params.status }}
+                        <li class="area-pub">
+                          <div class="area-pub__title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></div>
+                          {{ with .Params.award }}<div class="award-line">{{ partial "award_badge.html" . }}</div>{{ end }}
+                          <div class="area-pub__meta">
+                            {{ partial "authors.html" (dict "authors" .Params.authors "etal" .Params.et_al) }}.
+                            <em>{{ .Params.publication }}</em>{{ if not $st }}, {{ .Date.Format "2006" }}{{ end }}.
+                            {{ if eq $st "under_review" }}<span class="pub-badge pub-badge--review">Under review</span>
+                            {{ else if eq $st "in_preparation" }}<span class="pub-badge pub-badge--wp">Working paper</span>
+                            {{ else if eq $st "revise_resubmit" }}<span class="pub-badge pub-badge--review">R&amp;R</span>
+                            {{ else if eq $st "in_press" }}<span class="pub-badge">In press</span>{{ end }}
+                          </div>
+                          <div class="area-pub__links">
+                            {{ if .Params.abstract }}<a class="mini-btn" href="{{ .RelPermalink }}#abstract">Abstract</a>{{ end }}
+                            {{ with .Params.doi }}<a class="mini-btn" href="https://doi.org/{{ . }}" target="_blank" rel="noopener">Article</a>{{ end }}
+                            {{ with .Params.url_preprint }}<a class="mini-btn" href="{{ . }}" target="_blank" rel="noopener">Preprint</a>{{ end }}
+                            {{ with .Params.url_source }}<a class="mini-btn" href="{{ . }}" target="_blank" rel="noopener">Full text</a>{{ end }}
+                            {{ with .Params.url_pdf }}<a class="mini-btn" href="{{ . | relURL }}">PDF</a>{{ end }}
+                            {{ with .Params.url_code }}<a class="mini-btn" href="{{ . }}" target="_blank" rel="noopener">Code</a>{{ end }}
+                            {{ with .Params.url_app }}<a class="mini-btn" href="{{ . }}" target="_blank" rel="noopener">Web app</a>{{ end }}
+                            {{ with .Params.url_video }}<a class="mini-btn" href="{{ . }}" target="_blank" rel="noopener">Video abstract</a>{{ end }}
+                          </div>
+                        </li>
+                      {{ end }}
+                    {{ end }}
+                  </ul>
+                </div>
+              </details>
+            {{ end }}
+          </div>
+        </div>
+      {{ end }}
+    </div>
+    <p style="margin-top:1.5rem"><a class="link-arrow" href="{{ "/publication/" | relLangURL }}">View all writings &rarr;</a></p>
+  </div>
+</section>
+{{ end }}

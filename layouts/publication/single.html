@@ -1,0 +1,34 @@
+{{ define "main" }}
+{{ $p := . }}
+<article class="wrap single">
+  {{ partial "breadcrumbs.html" . }}
+  {{ $featured := (.Resources.ByType "image").GetMatch "*featured*" }}
+  {{ with $featured }}<img class="featured" src="{{ (.Fit "480x480 q85").RelPermalink }}" alt="{{ $p.Title }}" width="240" loading="lazy">{{ end }}
+  <h1 class="doc-title">{{ .Title }}</h1>
+  <p class="doc-authors">{{ partial "authors.html" (dict "authors" .Params.authors "etal" .Params.et_al) }}</p>
+  <p class="doc-meta">
+    {{ with .Params.publication }}<span class="pub-item__venue">{{ . }}</span>{{ end }}
+    {{- $st := .Params.status -}}
+    {{ if eq $st "under_review" }} &middot; Under review{{ else if eq $st "in_preparation" }} &middot; Working paper{{ else if eq $st "in_press" }} &middot; In press{{ else if eq $st "revise_resubmit" }} &middot; Revise &amp; resubmit{{ else if not .Date.IsZero }} &middot; {{ .Date.Format "2006" }}{{ end }}
+    {{ if eq .Params.article_language "da" }} &middot; In Danish{{ end }}
+  </p>
+  {{ with .Params.award }}<p class="doc-award">{{ partial "award_badge.html" . }}</p>{{ end }}
+  <div class="doc-links">
+    {{ with .Params.doi }}<a class="btn btn--primary" href="https://doi.org/{{ . }}" target="_blank" rel="noopener">{{ i18n "publisher_version" }}</a>{{ end }}
+    {{ with .Params.url_preprint }}<a class="btn {{ if $.Params.doi }}btn--ghost{{ else }}btn--primary{{ end }}" href="{{ . }}" target="_blank" rel="noopener">Preprint</a>{{ end }}
+    {{ with .Params.url_source }}<a class="btn btn--ghost" href="{{ . }}" target="_blank" rel="noopener">{{ i18n "full_text" }}</a>{{ end }}
+    {{ with .Params.url_pdf }}<a class="btn btn--ghost" href="{{ . | relURL }}">{{ i18n "pdf" }}</a>{{ end }}
+    {{ with .Params.url_code }}<a class="btn btn--ghost" href="{{ . }}" target="_blank" rel="noopener">Code</a>{{ end }}
+    {{ with .Params.url_app }}<a class="btn btn--ghost" href="{{ . }}" target="_blank" rel="noopener">Web app</a>{{ end }}
+    {{ with .Params.url_video }}<a class="btn btn--ghost" href="{{ . }}" target="_blank" rel="noopener">Video abstract</a>{{ end }}
+    <button class="btn btn--cite" type="button" aria-expanded="false"
+      onclick="var b=document.getElementById('citebox');var v=b.hasAttribute('hidden');if(v){b.removeAttribute('hidden')}else{b.setAttribute('hidden','')}this.setAttribute('aria-expanded',v)">{{ i18n "cite" }}</button>
+  </div>
+  <div id="citebox" class="cite-box" hidden><pre>{{ partial "bibtex_entry.html" . }}</pre></div>
+  {{ with .Params.abstract }}
+    <section class="abstract" id="abstract"><h2>Abstract</h2><p>{{ . }}</p></section>
+  {{ end }}
+  {{ with .Content }}<div class="prose">{{ . }}</div>{{ end }}
+  {{ partial "related_finder.html" . }}
+</article>
+{{ end }}

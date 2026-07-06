@@ -1,0 +1,10 @@
+{{ define "main" }}
+<div class="wrap notfound">
+  <h1>Page not found</h1>
+  <p class="section-sub" style="margin-inline:auto">The page you were looking for has moved or never existed. Try searching, or head back to the homepage.</p>
+  <p style="margin-top:1.5rem">
+    <button class="btn btn--primary" type="button" onclick="window.__openSearch && window.__openSearch()">Search the site</button>
+    <a class="btn btn--ghost" href="{{ site.Home.RelPermalink }}">Go home</a>
+  </p>
+</div>
+{{ end }}

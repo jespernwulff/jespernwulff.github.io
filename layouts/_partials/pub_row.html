@@ -1,0 +1,28 @@
+{{- /* One dense citation row on the Writings page. Context: a publication page. */ -}}
+{{- $st := .Params.status -}}
+{{- $wp := in (slice "under_review" "in_preparation" "revise_resubmit") $st -}}
+{{- $authorsPlain := delimit (.Params.authors | default slice) ", " -}}
+{{- $text := lower (printf "%s %s %s %s" $authorsPlain .Title (.Params.publication | default "") (delimit (.Params.tags | default slice) " ")) -}}
+<li class="pub-item"
+    data-tab="{{ .Params.tab | default "articles" }}"
+    data-year="{{ .Date.Format "2006" }}"
+    data-wp="{{ if $wp }}1{{ else }}0{{ end }}"
+    data-areas="{{ delimit (.Params.areas | default slice) " " }}"
+    data-slug="{{ path.Base .File.Dir }}"
+    data-title="{{ lower .Title }}"
+    data-text="{{ $text }}">
+  <div class="pub-item__meta">
+    <span class="pub-item__authors">{{ partial "authors.html" (dict "authors" .Params.authors "etal" .Params.et_al) }}</span>
+    <span class="pub-item__year"> ({{ .Date.Format "2006" }})</span>
+  </div>
+  <div class="pub-item__title">
+    <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+    {{ if eq $st "under_review" }}<span class="pub-badge pub-badge--review">Under review</span>
+    {{ else if eq $st "in_preparation" }}<span class="pub-badge pub-badge--wp">Working paper</span>
+    {{ else if eq $st "revise_resubmit" }}<span class="pub-badge pub-badge--review">R&amp;R</span>
+    {{ else if eq $st "in_press" }}<span class="pub-badge">In press</span>{{ end }}
+    {{ if eq .Params.article_language "da" }}<span class="pub-badge">Danish</span>{{ end }}
+  </div>
+  <div class="pub-item__meta"><span class="pub-item__venue">{{ .Params.publication }}</span></div>
+  {{ with .Params.award }}<div class="award-line">{{ partial "award_badge.html" . }}</div>{{ end }}
+</li>

@@ -1,0 +1,14 @@
+{{- /* Responsive figure from assets/images/. Usage:
+     {{< figimg src="photo.jpg" alt="..." caption="..." class="fig--right" width="760" >}} */ -}}
+{{- $img := resources.Get (printf "images/%s" (.Get "src")) -}}
+{{- if $img -}}
+  {{- $w := int ((.Get "width") | default "1000") -}}
+  {{- if gt $w $img.Width }}{{ $w = $img.Width }}{{ end -}}
+  {{- $r := $img.Resize (printf "%dx q82" $w) -}}
+  <figure class="fig {{ with .Get "class" }}{{ . }}{{ end }}">
+    <img src="{{ $r.RelPermalink }}" width="{{ $r.Width }}" height="{{ $r.Height }}" alt="{{ .Get "alt" }}" loading="lazy">
+    {{- with .Get "caption" }}<figcaption>{{ . | markdownify }}</figcaption>{{ end -}}
+  </figure>
+{{- else -}}
+  {{- errorf "figimg: image %q not found in assets/images/" (.Get "src") -}}
+{{- end -}}

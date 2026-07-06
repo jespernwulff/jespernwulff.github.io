@@ -1,0 +1,28 @@
+{{- /* Emit a BibTeX entry (single line-friendly) for a publication page. */ -}}
+{{- $p := . -}}
+{{- $t := $p.Params.publication_types | default slice -}}
+{{- $type := "article" -}}
+{{- if or (in $t "book_chapter") (in $t "chapter") -}}{{- $type = "incollection" -}}
+{{- else if in $t "book" -}}{{- $type = "book" -}}
+{{- else if in $t "paper_conference" -}}{{- $type = "inproceedings" -}}
+{{- else if or (in $t "report") (in $t "software") -}}{{- $type = "misc" -}}{{- end -}}
+{{- $key := path.Base $p.File.Dir -}}
+{{- $venuefield := cond (eq $type "incollection") "booktitle" "journal" -}}
+@{{ $type }}{{ "{" }}{{ $key }},
+  author = {{ "{" }}{{ delimit ($p.Params.authors | default slice) " and " }}{{ "}" }},
+  title = {{ "{" }}{{ $p.Title }}{{ "}" }},
+  {{ $venuefield }} = {{ "{" }}{{ $p.Params.journal }}{{ "}" }},
+  year = {{ "{" }}{{ $p.Date.Format "2006" }}{{ "}" }},
+{{- with $p.Params.volume }}
+  volume = {{ "{" }}{{ . }}{{ "}" }},
+{{- end -}}
+{{- with $p.Params.issue }}
+  number = {{ "{" }}{{ . }}{{ "}" }},
+{{- end -}}
+{{- with $p.Params.pages }}
+  pages = {{ "{" }}{{ . }}{{ "}" }},
+{{- end -}}
+{{- with $p.Params.doi }}
+  doi = {{ "{" }}{{ . }}{{ "}" }},
+{{- end }}
+}

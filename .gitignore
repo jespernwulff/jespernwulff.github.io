@@ -1,0 +1,13 @@
+# Hugo build output
+/public/
+/resources/_gen/
+/.hugo_build.lock
+hugo_stats.json
+build.log
+
+# Node
+node_modules/
+
+# OS / editor
+.DS_Store
+Thumbs.db

@@ -1,0 +1,17 @@
+---
+title: "Investigating the Analytical Robustness of the Social and Behavioural Sciences"
+date: 2026-04-02
+authors: ["Balazs Aczel", "Barnabas Szaszi", "Jesper N. Wulff", "Brian Nosek"]
+et_al: true
+publication_types: ["journal_article"]
+publication: "Nature, 652, 135-142"
+journal: "Nature"
+volume: "652"
+pages: "135-142"
+doi: "10.1038/s41586-025-09844-9"
+url_preprint: "https://osf.io/preprints/metaarxiv/twqsv_v1"
+tab: "articles"
+areas: ["metascience"]
+tags: ["many analysts", "robustness", "open science", "metascience"]
+abstract: "The same dataset can be analysed in different justifiable ways to answer the same research question, potentially challenging the robustness of empirical science 1 , 2 , 3 . In this crowd initiative, we investigated the degree to which research findings in the social and behavioural sciences are contingent on analysts’ choices. We examined a stratified random sample of 100 studies published between 2009 and 2018, in which, for one claim per study, at least five reanalysts independently reanalysed the original data. The statistical appropriateness of the reanalyses was assessed in peer evaluations, and the robustness indicators were inspected along a range of research characteristics and study designs. We found that 34% of the independent reanalyses yielded the same result (within a tolerance region of ±0.05 Cohen’s d ) as the original report; with a four times broader tolerance region, this indicator increased to 57%. Of the reanalyses conducted, 74% reached the same conclusion as the original investigation, 24% yielded no effects or inconclusive results and 2% reported the opposite effect. This exploratory study indicates that the common single-path analyses in social and behavioural research should not be simply assumed to be robust to alternative analyses 4 . Therefore, we recommend the development and use of practices to explore and communicate this neglected source of uncertainty."
+---

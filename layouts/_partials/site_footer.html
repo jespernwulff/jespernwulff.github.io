@@ -1,0 +1,38 @@
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div>
+      <div class="site-footer__name">{{ site.Params.author_name }}</div>
+      <p class="site-footer__blurb">{{ site.Params.role }}, {{ site.Params.institution }}. Empirical methods for management research and the social sciences.</p>
+      <div class="hero__icons" style="margin-top:.9rem;margin-left:0">
+        {{- range site.Params.profiles -}}
+          <a class="icon-link" href="{{ .url }}" aria-label="{{ .name }}"{{ if not (hasPrefix .url "mailto:") }} target="_blank" rel="noopener"{{ end }} style="color:var(--color-footer-muted);border-color:var(--color-footer-surface)">{{ partial "social-icon.html" .icon }}</a>
+        {{- end -}}
+      </div>
+    </div>
+    <div>
+      <h3>Explore</h3>
+      <ul>
+        {{- range site.Menus.main -}}
+          <li><a href="{{ .URL | relLangURL }}">{{ .Name }}</a></li>
+        {{- end -}}
+      </ul>
+    </div>
+    <div>
+      <h3>Elsewhere</h3>
+      <ul>
+        {{- range site.Params.profiles -}}
+          {{- if ne .icon "email" -}}<li><a href="{{ .url }}" target="_blank" rel="noopener">{{ .name }}</a></li>{{- end -}}
+        {{- end -}}
+        <li><a href="mailto:{{ site.Params.email }}">{{ site.Params.email }}</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="site-footer__bar">
+    <div class="site-footer__bar-inner">
+      <span>&copy; {{ now.Year }} {{ site.Params.author_name }}</span>
+      {{- if (site.Params.mysite.credit | default true) -}}
+        <span class="site-footer__credit">Created using <a href="https://garyking.org/mysite" target="_blank" rel="noopener">GaryKing.org/mysite</a></span>
+      {{- end -}}
+    </div>
+  </div>
+</footer>

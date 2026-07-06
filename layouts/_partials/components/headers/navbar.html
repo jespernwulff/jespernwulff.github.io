@@ -1,0 +1,30 @@
+{{- $brand := site.Params.header.navbar.logo.text | default site.Params.author_name | default site.Title -}}
+<nav class="site-nav" aria-label="Main navigation">
+  <div class="site-nav__inner">
+    <a class="site-nav__brand" href="{{ site.Home.RelPermalink }}">{{ $brand }}</a>
+    <div class="site-nav__right">
+      <ul class="site-nav__links">
+        {{- range site.Menus.main -}}
+          <li><a class="site-nav__link {{ if $.IsMenuCurrent "main" . }}is-active{{ end }}" href="{{ .URL | relLangURL }}">{{ .Name }}</a></li>
+        {{- end -}}
+      </ul>
+      {{- if (site.Params.header.navbar.show_search | default true) -}}
+        <button class="site-nav__search" type="button" aria-label="Search this site" onclick="window.__openSearch && window.__openSearch()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
+      {{- end -}}
+      <button class="site-nav__toggle" type="button" aria-label="Toggle menu" aria-expanded="false"
+        onclick="(function(b){var n=b.closest('.site-nav');var o=n.classList.toggle('is-open');b.setAttribute('aria-expanded',o?'true':'false');})(this)">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+  </div>
+  <div class="site-nav__mobile">
+    <ul>
+      {{- range site.Menus.main -}}
+        <li><a href="{{ .URL | relLangURL }}">{{ .Name }}</a></li>
+      {{- end -}}
+    </ul>
+  </div>
+</nav>
+{{- partial "components/search-modal.html" . -}}

@@ -1,0 +1,9 @@
+{{- /* GaryKing.org/mysite invisible discovery metadata (opt-out via params.mysite.discovery). Renders nothing visible. */ -}}
+{{- if (site.Params.mysite.discovery | default true) -}}
+  <meta name="generator" content="Created using GaryKing.org/mysite (https://gking.harvard.edu/mysite)">
+  {{- if .IsHome -}}
+    <script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":{{ site.Params.author_name | jsonify }},"affiliation":{"@type":"Organization","name":{{ site.Params.institution | jsonify }}},"url":{{ site.BaseURL | jsonify }},"isBasedOn":"https://gking.harvard.edu/mysite"}
+    </script>
+  {{- end -}}
+{{- end -}}

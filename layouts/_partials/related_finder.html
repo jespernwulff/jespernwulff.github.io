@@ -1,0 +1,105 @@
+{{- /* Automatic "See Also" cross-linker. Runs at build time on publication/software pages.
+       Priority: explicit related_* overrides + see_also + dataverse_url; shared research area;
+       then title-token(+2) / shared-author(+1) / shared-tag(+2) scoring backfill. Cap 8. */ -}}
+{{- $me := . -}}
+{{- $owner := site.Params.author_name -}}
+{{- $stop := slice "a" "an" "and" "the" "of" "for" "in" "on" "to" "with" "by" "at" "as" "is" "are" "be" "or" "from" "into" "using" "via" "new" "not" "no" "it" "its" "we" "our" "their" "you" "your" "this" "that" "these" "those" "but" "if" "than" "then" "so" "can" "will" "would" "could" "should" "may" "might" "also" "more" "most" "some" "all" "any" "each" "every" "who" "whom" "which" "what" "when" "where" "why" "how" "about" "between" "among" "through" "over" "under" "after" "before" "upon" "across" "per" "vs" "de" "la" "les" "et" "du" -}}
+
+{{- /* my title tokens */ -}}
+{{- $mt := slice -}}
+{{- range (split (lower $me.Title) " ") -}}
+  {{- $w := replaceRE "[^a-z0-9]+" "" . -}}
+  {{- if and (ge (len $w) 3) (not (in $stop $w)) -}}{{- $mt = $mt | append $w -}}{{- end -}}
+{{- end -}}
+{{- $myAuthors := $me.Params.authors | default slice -}}
+{{- $myTags := $me.Params.tags | default slice -}}
+{{- $myAreas := $me.Params.areas | default slice -}}
+{{- $mynorm := lower (replaceRE "[^a-z0-9]+" "" $me.Title) -}}
+{{- $candidates := where site.RegularPages "Section" "in" (slice "publication" "software") -}}
+
+{{- /* overrides list of slugs */ -}}
+{{- $overrides := (append ($me.Params.related_papers | default slice) ($me.Params.related_software | default slice)) -}}
+{{- $overrides = append $overrides ($me.Params.related_datasets | default slice) -}}
+{{- $overrides = append $overrides ($me.Params.related_talks | default slice) -}}
+{{- with $me.Params.related_paper -}}{{- $overrides = $overrides | append . -}}{{- end -}}
+{{- with $me.Params.related_dataset -}}{{- $overrides = $overrides | append . -}}{{- end -}}
+
+{{- /* PASS A: score every candidate */ -}}
+{{- $all := slice -}}
+{{- $explicit := 0 -}}
+{{- range $p := $candidates -}}
+  {{- $pnorm := lower (replaceRE "[^a-z0-9]+" "" $p.Title) -}}
+  {{- if ne $pnorm $mynorm -}}
+    {{- $pslug := path.Base $p.File.Dir -}}
+    {{- $score := 0 -}}{{- $pinned := false -}}{{- $area := false -}}
+    {{- if in $overrides $pslug -}}{{- $pinned = true -}}{{- $score = 1000 -}}{{- end -}}
+    {{- range $a := $myAreas -}}{{- if in ($p.Params.areas | default slice) $a -}}{{- $area = true -}}{{- end -}}{{- end -}}
+    {{- if $area -}}{{- $score = add $score 3 -}}{{- end -}}
+    {{- /* title tokens */ -}}
+    {{- $ptoks := slice -}}
+    {{- range (split (lower $p.Title) " ") -}}
+      {{- $w := replaceRE "[^a-z0-9]+" "" . -}}
+      {{- if and (ge (len $w) 3) (not (in $stop $w)) -}}{{- $ptoks = $ptoks | append $w -}}{{- end -}}
+    {{- end -}}
+    {{- range $tok := $mt -}}{{- if in $ptoks $tok -}}{{- $score = add $score 2 -}}{{- end -}}{{- end -}}
+    {{- /* shared authors (exclude the owner; exact or last-name) */ -}}
+    {{- $pAuthors := $p.Params.authors | default slice -}}
+    {{- range $a := $myAuthors -}}
+      {{- if ne $a $owner -}}
+        {{- if in $pAuthors $a -}}{{- $score = add $score 1 -}}
+        {{- else -}}
+          {{- $aln := index (last 1 (split $a " ")) 0 -}}
+          {{- range $b := $pAuthors -}}
+            {{- if and (ne $b $owner) (gt (len $aln) 2) (eq $aln (index (last 1 (split $b " ")) 0)) -}}{{- $score = add $score 1 -}}{{- end -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+    {{- /* shared tags */ -}}
+    {{- range $tg := $myTags -}}{{- if in ($p.Params.tags | default slice) $tg -}}{{- $score = add $score 2 -}}{{- end -}}{{- end -}}
+    {{- if or $pinned $area -}}{{- $explicit = add $explicit 1 -}}{{- end -}}
+    {{- $sortval := add (mul $score 10000) (int $p.Date.Year) -}}
+    {{- $all = $all | append (dict "page" $p "score" $score "pinned" $pinned "area" $area "sortval" $sortval "norm" $pnorm) -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* PASS B: threshold + include */ -}}
+{{- $threshold := cond (lt $explicit 3) 2 4 -}}
+{{- $picked := slice -}}
+{{- range $r := $all -}}
+  {{- if or $r.pinned $r.area (ge $r.score $threshold) -}}{{- $picked = $picked | append $r -}}{{- end -}}
+{{- end -}}
+{{- $picked = sort $picked "sortval" "desc" -}}
+
+{{- /* Render */ -}}
+{{- $limit := 8 -}}
+{{- $count := 0 -}}
+{{- $seen := slice $mynorm -}}
+{{- $dv := $me.Params.dataverse_url -}}
+{{- if or (gt (len $picked) 0) $dv $me.Params.see_also -}}
+<section class="gk-see-also" aria-labelledby="see-also-h">
+  <h2 id="see-also-h">See also</h2>
+  <ul>
+    {{- with $dv -}}
+      <li class="gk-see-also__item"><span class="gk-kind gk-kind--data">[Dataset]</span><a href="{{ . }}" target="_blank" rel="noopener">{{ $me.Params.dataverse_name | default "Replication data" }}</a></li>
+      {{- $count = add $count 1 -}}
+    {{- end -}}
+    {{- range $s := ($me.Params.see_also | default slice) -}}
+      {{- if and (lt $count $limit) $s.url -}}
+        <li class="gk-see-also__item"><span class="gk-kind">[{{ $s.kind | default "Link" }}]</span><a href="{{ $s.url }}"{{ if hasPrefix $s.url "http" }} target="_blank" rel="noopener"{{ end }}>{{ $s.title | default $s.url }}</a></li>
+        {{- $count = add $count 1 -}}
+      {{- end -}}
+    {{- end -}}
+    {{- range $r := $picked -}}
+      {{- if and (lt $count $limit) (not (in $seen $r.norm)) -}}
+        {{- $p := $r.page -}}
+        {{- $kind := partial "related_kind.html" $p -}}
+        {{- $cls := "" -}}{{- if eq $kind "Dataset" -}}{{- $cls = " gk-kind--data" -}}{{- else if eq $kind "Software" -}}{{- $cls = " gk-kind--software" -}}{{- end -}}
+        <li class="gk-see-also__item"><span class="gk-kind{{ $cls }}">[{{ $kind }}]</span><a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a>{{ with $p.Date }} <span class="meta">&middot; {{ .Format "2006" }}</span>{{ end }}</li>
+        {{- $seen = $seen | append $r.norm -}}
+        {{- $count = add $count 1 -}}
+      {{- end -}}
+    {{- end -}}
+  </ul>
+</section>
+{{- end -}}

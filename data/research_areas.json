@@ -1,0 +1,109 @@
+{
+  "groups": [
+    {
+      "name": "Methods",
+      "areas": [
+        {
+          "id": "glm",
+          "name": "Generalized linear models",
+          "summary": "Models for proportions and fractional outcomes, log-transformed and exponential models, and binary, two-part, and multinomial models.",
+          "papers": [
+            "binary-regression-average-partial-effects",
+            "two-part-models-innovation-sales",
+            "modeling-fractions-proportions",
+            "log-transformed-dependent-variables",
+            "proportions-international-business",
+            "multinomial-logit-foreign-entry",
+            "generalized-two-part-fractional-cmp"
+          ]
+        },
+        {
+          "id": "inference",
+          "name": "Statistical inference",
+          "summary": "Sample-size-dependent significance thresholds and the sound use of null hypothesis significance testing.",
+          "papers": [
+            "alpha-sample-size-bayesian-compromise",
+            "separating-misapplication-from-method-nhst"
+          ]
+        },
+        {
+          "id": "sensitivity",
+          "name": "Sensitivity analysis",
+          "summary": "How robust published estimates are to omitted confounding — and how to run and report sensitivity analysis correctly.",
+          "papers": [
+            "itcv-control-variable-correlations",
+            "itcv-robust-standard-errors",
+            "diagnostics-without-microdata"
+          ]
+        },
+        {
+          "id": "metascience",
+          "name": "Meta-science",
+          "summary": "Replication, analytical robustness, and common methodological mistakes in the social and behavioural sciences.",
+          "papers": [
+            "analytical-robustness-social-behavioural-sciences",
+            "replicability-social-behavioral-sciences",
+            "common-methodological-mistakes",
+            "survey-vs-field-experiments"
+          ]
+        },
+        {
+          "id": "imputation",
+          "name": "Multiple imputation",
+          "summary": "Practical guidance and methods for handling missing data, from chained equations to multilevel imputation.",
+          "papers": [
+            "mice-praxis-guidelines-review",
+            "biknn-imputation-multilevel"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Applications",
+      "areas": [
+        {
+          "id": "deeplearning",
+          "name": "Deep learning",
+          "summary": "Computer vision and transformer models applied to finance and business processes.",
+          "papers": [
+            "pixels-to-signals-return-prediction",
+            "deep-learning-agricultural-subsidy"
+          ]
+        },
+        {
+          "id": "finance",
+          "name": "Corporate finance",
+          "summary": "CEO personality and behaviour, acquisitions, and firm dynamics.",
+          "papers": [
+            "ceo-personality-strategic-flexibility",
+            "ceo-narcissism-corporate-acquisitions",
+            "european-cross-border-acquisitions"
+          ]
+        },
+        {
+          "id": "pubadmin",
+          "name": "Public administration",
+          "summary": "Discrimination, leadership, values, and performance in public organizations.",
+          "papers": [
+            "chinese-football-clubs-performance",
+            "public-private-employee-values",
+            "ethnic-employment-discrimination-public",
+            "combined-leadership-innovative-behavior",
+            "public-sector-fairer-employer"
+          ]
+        },
+        {
+          "id": "epi",
+          "name": "Social epidemiology",
+          "summary": "Register-based studies of socioeconomic position, mental health, and disease risk.",
+          "papers": [
+            "multilevel-survival-self-harm",
+            "autism-risk-machine-learning",
+            "socioeconomic-position-lifestyle-diseases",
+            "loneliness-recursive-partitioning"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,167 @@
+{{ define "main" }}
+{{ $all := sort (where site.RegularPages "Section" "publication") "Date" "desc" }}
+{{ $wpStatuses := slice "under_review" "in_preparation" "revise_resubmit" }}
+{{ $wp := where $all "Params.status" "in" $wpStatuses }}
+{{ $rest := complement $wp $all }}
+{{ $tabDefs := slice (dict "id" "articles" "label" "Articles") (dict "id" "book" "label" "Book Chapters") (dict "id" "proceedings" "label" "Proceedings") (dict "id" "under-review" "label" "Under Review") (dict "id" "working-papers" "label" "Working Papers") }}
+{{ $years := slice }}
+{{ range $all }}{{ $years = $years | append (.Date.Format "2006") }}{{ end }}
+{{ $years = $years | uniq }}
+{{ $years = sort $years "value" "desc" }}
+{{ $areas := site.Data.research_areas }}
+
+<div class="wrap writings" id="writings">
+  {{ partial "breadcrumbs.html" . }}
+  <div class="section-head">
+    <h1 class="doc-title">{{ .Title | default "Writings" }}</h1>
+    {{ with .Params.summary }}<p class="section-sub">{{ . }}</p>{{ end }}
+  </div>
+
+  <nav class="pub-tabs" role="tablist" aria-label="Filter by type">
+    <button class="tab-btn active" data-tab="all" role="tab" aria-selected="true">All</button>
+    {{ range $tabDefs }}
+      {{ $c := len (where $all "Params.tab" .id) }}
+      {{ if gt $c 0 }}<button class="tab-btn" data-tab="{{ .id }}" role="tab" aria-selected="false">{{ .label }}</button>{{ end }}
+    {{ end }}
+  </nav>
+
+  <div class="writings__layout">
+    <aside class="filters" aria-label="Filters">
+      <div class="filter-group filter-search">
+        <h3>Search</h3>
+        <input id="flt-search" type="search" placeholder="Title, author, venue…" autocomplete="off" aria-label="Search writings">
+      </div>
+      {{ with $areas }}
+      <div class="filter-group filter-select">
+        <h3>Research area</h3>
+        <select id="flt-area" aria-label="Filter by research area">
+          <option value="">All areas</option>
+          {{ range .groups }}
+            <optgroup label="{{ .name }}">
+              {{ range .areas }}<option value="{{ .id }}">{{ .name }}</option>{{ end }}
+            </optgroup>
+          {{ end }}
+        </select>
+      </div>
+      {{ end }}
+      <div class="filter-group">
+        <h3>Year</h3>
+        <div class="check-list">
+          {{ range $years }}
+            <label class="check-row"><input type="checkbox" class="flt-year" value="{{ . }}"> <span>{{ . }}</span></label>
+          {{ end }}
+        </div>
+      </div>
+      <button id="flt-reset" class="btn btn--ghost filter-reset" type="button">Reset filters</button>
+    </aside>
+
+    <div>
+      <div class="result-bar">
+        <span class="result-count" data-word="results">{{ len $all }} of {{ len $all }} results</span>
+        <div class="result-actions">
+          <label class="sort">
+            <span class="sr-only">Sort</span>
+            <select id="flt-sort" aria-label="Sort order">
+              <option value="newest">Newest first</option>
+              <option value="oldest">Oldest first</option>
+              <option value="az">Title A–Z</option>
+              <option value="za">Title Z–A</option>
+            </select>
+          </label>
+          <button id="flt-cite" class="btn btn--cite" type="button">Download citations</button>
+        </div>
+      </div>
+
+      <ul class="pub-list" id="pub-list">
+        {{ range $wp }}{{ partial "pub_row.html" . }}{{ end }}
+        {{ range $rest }}{{ partial "pub_row.html" . }}{{ end }}
+      </ul>
+      <p class="pub-empty" id="pub-empty" hidden>No writings match these filters.</p>
+    </div>
+  </div>
+
+  {{ $bib := dict }}
+  {{ range $all }}{{ $bib = merge $bib (dict (path.Base .File.Dir) (partial "bibtex_entry.html" .)) }}{{ end }}
+  <script type="application/json" id="bibdata">{{ $bib | jsonify }}</script>
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById('writings');
+  if (!root) return;
+  var items = Array.prototype.slice.call(root.querySelectorAll('.pub-item'));
+  var tabs = root.querySelectorAll('.tab-btn');
+  var searchIn = document.getElementById('flt-search');
+  var areaSel = document.getElementById('flt-area');
+  var yearBoxes = Array.prototype.slice.call(root.querySelectorAll('.flt-year'));
+  var sortSel = document.getElementById('flt-sort');
+  var countEl = root.querySelector('.result-count');
+  var listEl = document.getElementById('pub-list');
+  var emptyEl = document.getElementById('pub-empty');
+  var resetBtn = document.getElementById('flt-reset');
+  var state = { tab: 'all', q: '', area: '', years: [], sort: 'newest' };
+
+  function readYears() { state.years = yearBoxes.filter(function (b) { return b.checked; }).map(function (b) { return b.value; }); }
+
+  function apply() {
+    var visible = 0;
+    items.forEach(function (it) {
+      var ok = (state.tab === 'all') || (it.dataset.tab === state.tab);
+      if (ok && state.q) ok = it.dataset.text.indexOf(state.q) > -1;
+      if (ok && state.area) ok = (' ' + it.dataset.areas + ' ').indexOf(' ' + state.area + ' ') > -1;
+      if (ok && state.years.length) ok = state.years.indexOf(it.dataset.year) > -1;
+      it.style.display = ok ? '' : 'none';
+      if (ok) visible++;
+    });
+    if (countEl) countEl.textContent = visible + ' of ' + items.length + ' ' + (countEl.dataset.word || 'results');
+    if (emptyEl) emptyEl.hidden = visible !== 0;
+    tabs.forEach(function (t) {
+      var a = t.dataset.tab === state.tab;
+      t.classList.toggle('active', a);
+      t.setAttribute('aria-selected', a ? 'true' : 'false');
+    });
+  }
+  function sortItems() {
+    items.slice().sort(function (a, b) {
+      if (state.sort === 'newest') return (b.dataset.wp - a.dataset.wp) || (b.dataset.year - a.dataset.year);
+      if (state.sort === 'oldest') return a.dataset.year - b.dataset.year;
+      if (state.sort === 'az') return a.dataset.title.localeCompare(b.dataset.title);
+      if (state.sort === 'za') return b.dataset.title.localeCompare(a.dataset.title);
+      return 0;
+    }).forEach(function (it) { listEl.appendChild(it); });
+  }
+  function setTab(t) { state.tab = t; history.replaceState(null, '', '#' + t); apply(); }
+
+  tabs.forEach(function (t) { t.addEventListener('click', function () { setTab(t.dataset.tab); }); });
+  if (searchIn) searchIn.addEventListener('input', function () { state.q = this.value.trim().toLowerCase(); apply(); });
+  if (areaSel) areaSel.addEventListener('change', function () { state.area = this.value; apply(); });
+  yearBoxes.forEach(function (b) { b.addEventListener('change', function () { readYears(); apply(); }); });
+  if (sortSel) sortSel.addEventListener('change', function () { state.sort = this.value; sortItems(); });
+  if (resetBtn) resetBtn.addEventListener('click', function () {
+    state.q = ''; state.area = ''; state.years = []; state.sort = 'newest';
+    if (searchIn) searchIn.value = ''; if (areaSel) areaSel.value = '';
+    yearBoxes.forEach(function (b) { b.checked = false; });
+    if (sortSel) sortSel.value = 'newest';
+    sortItems(); setTab('all');
+  });
+
+  var bibEl = document.getElementById('bibdata');
+  var bib = bibEl ? JSON.parse(bibEl.textContent || '{}') : {};
+  var cite = document.getElementById('flt-cite');
+  if (cite) cite.addEventListener('click', function () {
+    var out = [];
+    items.forEach(function (it) { if (it.style.display !== 'none' && bib[it.dataset.slug]) out.push(bib[it.dataset.slug]); });
+    var blob = new Blob([out.join('\n\n')], { type: 'text/plain;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'wulff-citations.bib';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+  });
+
+  var h = (location.hash || '').replace('#', '');
+  var valid = Array.prototype.map.call(tabs, function (t) { return t.dataset.tab; });
+  state.tab = valid.indexOf(h) > -1 ? h : 'all';
+  apply();
+})();
+</script>
+{{ end }}

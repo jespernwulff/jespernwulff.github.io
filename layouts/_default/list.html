@@ -1,0 +1,20 @@
+{{ define "main" }}
+<div class="wrap single">
+  {{ partial "breadcrumbs.html" . }}
+  <div class="section-head">
+    <h1 class="doc-title">{{ .Title }}</h1>
+    {{ with .Params.summary }}<p class="section-sub">{{ . }}</p>{{ end }}
+  </div>
+  {{ with .Content }}<div class="prose">{{ . }}</div>{{ end }}
+  {{ with .Pages }}
+    <ul class="pub-list" style="margin-top:1.5rem">
+      {{ range . }}
+        <li class="pub-item">
+          <div class="pub-item__title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></div>
+          {{ with .Params.summary }}<div class="pub-item__meta">{{ . }}</div>{{ end }}
+        </li>
+      {{ end }}
+    </ul>
+  {{ end }}
+</div>
+{{ end }}

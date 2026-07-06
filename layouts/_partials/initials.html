@@ -1,0 +1,5 @@
+{{- $p := split . " " -}}
+{{- $f := substr (index $p 0) 0 1 -}}
+{{- $l := "" -}}
+{{- if gt (len $p) 1 -}}{{- $l = substr (index $p (sub (len $p) 1)) 0 1 -}}{{- end -}}
+{{- upper (print $f $l) -}}

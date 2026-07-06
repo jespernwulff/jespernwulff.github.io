@@ -1,0 +1,25 @@
+{{ define "main" }}
+{{ $items := (where site.RegularPages "Section" "software").ByWeight }}
+<div class="wrap single">
+  {{ partial "breadcrumbs.html" . }}
+  <div class="section-head">
+    <h1 class="doc-title">{{ .Title | default "Software" }}</h1>
+    {{ with .Params.summary }}<p class="section-sub">{{ . }}</p>{{ end }}
+  </div>
+  {{ with .Content }}<div class="prose" style="margin-bottom:1.5rem">{{ . }}</div>{{ end }}
+  <ul class="software-list">
+    {{ range $items }}
+      <li class="software-item">
+        {{ with .Params.pkg_kind }}<div class="kind">{{ . }}</div>{{ end }}
+        <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+        {{ with .Params.summary }}<p>{{ . }}</p>{{ end }}
+        {{ with .Params.links }}
+        <div class="doc-links">
+          {{ range . }}<a class="btn btn--ghost" href="{{ .url }}" target="_blank" rel="noopener">{{ .name }}</a>{{ end }}
+        </div>
+        {{ end }}
+      </li>
+    {{ end }}
+  </ul>
+</div>
+{{ end }}

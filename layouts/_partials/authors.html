@@ -1,0 +1,18 @@
+{{- /* Renders a citation author list. Owner bolded; co-authors link to their external page
+       (resolved in data/coauthors.json). Usage:
+       {{ partial "authors.html" (dict "authors" .Params.authors "etal" .Params.et_al) }} */ -}}
+{{- $authors := .authors | default slice -}}
+{{- $etal := .etal -}}
+{{- $links := site.Data.coauthors | default dict -}}
+{{- $owner := site.Params.author_name -}}
+{{- $n := len $authors -}}
+{{- range $i, $a := $authors -}}
+  {{- if gt $i 0 -}}
+    {{- if and (eq $i (sub $n 1)) (not $etal) }} &amp; {{ else }}, {{ end -}}
+  {{- end -}}
+  {{- $entry := index $links $a -}}
+  {{- if eq $a $owner -}}<strong class="is-owner">{{ $a }}</strong>
+  {{- else if (and $entry $entry.url) -}}<a href="{{ $entry.url }}" target="_blank" rel="noopener">{{ $a }}</a>
+  {{- else -}}{{ $a }}{{- end -}}
+{{- end -}}
+{{- if $etal -}}, et al.{{- end -}}

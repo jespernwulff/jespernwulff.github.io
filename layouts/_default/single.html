@@ -1,0 +1,8 @@
+{{ define "main" }}
+<article class="wrap single">
+  {{ partial "breadcrumbs.html" . }}
+  <h1 class="doc-title">{{ .Title }}</h1>
+  {{ with .Content }}<div class="prose">{{ . }}</div>{{ end }}
+  {{ if in (slice "publication" "software") .Section }}{{ partial "related_finder.html" . }}{{ end }}
+</article>
+{{ end }}

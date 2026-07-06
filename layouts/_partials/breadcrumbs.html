@@ -1,0 +1,8 @@
+{{- $p := . -}}
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <a href="{{ site.Home.RelPermalink }}">Home</a>
+  {{- if and $p.IsPage $p.CurrentSection (ne $p.CurrentSection.RelPermalink $p.RelPermalink) -}}
+    <span class="sep">/</span><a href="{{ $p.CurrentSection.RelPermalink }}">{{ $p.CurrentSection.Title | default (humanize $p.Section) }}</a>
+  {{- end -}}
+  <span class="sep">/</span><span aria-current="page">{{ $p.Title }}</span>
+</nav>
