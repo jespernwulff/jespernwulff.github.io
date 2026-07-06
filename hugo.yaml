@@ -1,4 +1,4 @@
-baseURL: "https://jespernwulff.github.io/jespernwulff-site/"
+baseURL: "https://jespernwulff.github.io/"
 title: "Jesper N. Wulff"
 languageCode: en-us
 enableRobotsTXT: true
@@ -40,7 +40,7 @@ permalinks:
 
 # The homepage is a custom landing (layouts/index.html); silence Blox's "no sections" note.
 ignoreLogs:
-  - "sections-none-/jespernwulff-site/"
+  - "sections-none-/"
 
 params:
   # --- Owner identity (used by custom templates) ---

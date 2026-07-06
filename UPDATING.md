@@ -2,7 +2,7 @@
 
 This site is plain Markdown + a little configuration. You never have to run anything: **edit a file on GitHub, commit, and the site rebuilds and redeploys itself in ~2 minutes** (via GitHub Actions). If you prefer, you can edit locally and `git push`.
 
-The live site is: **https://jespernwulff.github.io/jespernwulff-site/**
+The live site is: **https://jespernwulff.github.io/**
 
 ---
 
@@ -69,7 +69,7 @@ To attach a PDF: put the file in `static/files/`, then add
 ```yaml
 url_pdf: "files/your-file.pdf"
 ```
-(no leading slash — that matters for the `/jespernwulff-site/` sub-path).
+(no leading slash — keeps the link portable if the site ever moves to a sub-path).
 
 **Other link buttons** (all optional; they appear on the paper's page and in the homepage research areas):
 ```yaml

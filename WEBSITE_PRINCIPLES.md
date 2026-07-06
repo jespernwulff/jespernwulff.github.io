@@ -11,7 +11,7 @@ Playbook for future (AI-assisted) maintenance of this site. Built to the spec at
 | Theme | **Hugo Blox** `blox-tailwind` (Go module, vendored in `_vendor/`) |
 | CSS | Tailwind v4 (via the theme) + `assets/css/custom.css` for all project styling |
 | Search | **Pagefind** (WASM, built in CI, indexed from the HTML) |
-| Hosting | **GitHub Pages** project site, `/jespernwulff-site/` sub-path |
+| Hosting | **GitHub Pages** user site at https://jespernwulff.github.io/ (repo `jespernwulff.github.io`) |
 | CI | GitHub Actions (`.github/workflows/deploy.yml`) |
 
 The Hugo site **is the repository root** (not a `hugo-site/` subfolder), which is why the deploy
@@ -65,7 +65,8 @@ No script, no stale data file — it recomputes on every build.
 
 ## Sub-path safety (the #1 source of 404s)
 
-The site lives under `/jespernwulff-site/`. Never hard-code `/foo`. In templates use
+The site now lives at the domain root, but keep sub-path discipline anyway (it costs nothing
+and survives any future move). Never hard-code `/foo`. In templates use
 `relURL "foo"` (no leading slash); in Markdown use the `staticrel` shortcode or `url_pdf: files/...`
 (no leading slash). The Pagefind import in the search modal is `relURL`-wrapped.
 

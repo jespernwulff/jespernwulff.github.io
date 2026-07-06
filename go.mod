@@ -1,4 +1,4 @@
-module github.com/jespernwulff/jespernwulff-site
+module github.com/jespernwulff/jespernwulff.github.io
 
 go 1.22
 
