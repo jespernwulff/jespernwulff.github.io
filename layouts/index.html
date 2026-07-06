@@ -15,8 +15,8 @@
       <p class="hero__inst"><a href="{{ site.Params.institution_url }}" target="_blank" rel="noopener">{{ site.Params.institution }}</a></p>
       {{ with .Params.intro }}<p class="hero__intro">{{ . }}</p>{{ end }}
       <div class="hero__actions">
-        <a class="btn btn--primary" href="{{ "/bio/" | relLangURL }}">Bio &amp; C.V.</a>
-        <a class="btn btn--ghost" href="{{ "/publication/" | relLangURL }}">Writings</a>
+        <a class="btn btn--primary" href="{{ (site.GetPage "/bio").RelPermalink }}">Bio &amp; C.V.</a>
+        <a class="btn btn--ghost" href="{{ (site.GetPage "/publication").RelPermalink }}">Writings</a>
         <span class="hero__icons">
           {{ range site.Params.profiles }}
             <a class="icon-link" href="{{ .url }}" aria-label="{{ .name }}"{{ if not (hasPrefix .url "mailto:") }} target="_blank" rel="noopener"{{ end }}>{{ partial "social-icon.html" .icon }}</a>
@@ -82,7 +82,7 @@
         </div>
       {{ end }}
     </div>
-    <p style="margin-top:1.5rem"><a class="link-arrow" href="{{ "/publication/" | relLangURL }}">View all writings &rarr;</a></p>
+    <p style="margin-top:1.5rem"><a class="link-arrow" href="{{ (site.GetPage "/publication").RelPermalink }}">View all writings &rarr;</a></p>
   </div>
 </section>
 {{ end }}
