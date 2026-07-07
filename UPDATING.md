@@ -108,7 +108,6 @@ with their exact name as it appears in `authors:` lists.
 
 ## Things you may want to add later
 
-- **Google Scholar** currently points to a name search. If you want your exact profile, replace the URL in `hugo.yaml` (under `profiles`) and `content/contact/_index.md`.
 - **DOIs / abstracts** are filled in for most articles but not the conference proceedings, the two Danish articles, or the book chapter — add them to those `index.md` files if you like.
 - **Cover images:** drop a `featured.jpg` next to any paper's `index.md` to show a thumbnail on its page.
 - **The Bayesian-frequentist web app:** if it has a public URL, add it to `content/software/alphan/index.md`.

@@ -57,7 +57,7 @@ params:
       url: "mailto:jwulff@econ.au.dk"
     - name: "Google Scholar"
       icon: "scholar"
-      url: "https://scholar.google.com/citations?view_op=search_authors&mauthors=Jesper+N.+Wulff"
+      url: "https://scholar.google.com/citations?user=53OilqYAAAAJ"
     - name: "ORCID"
       icon: "orcid"
       url: "https://orcid.org/0000-0002-7976-0939"
