@@ -66,6 +66,7 @@
           "name": "Deep learning",
           "summary": "Computer vision and transformer models applied to finance and business processes.",
           "papers": [
+            "decomposing-price-chart-signals",
             "pixels-to-signals-return-prediction",
             "deep-learning-agricultural-subsidy"
           ]

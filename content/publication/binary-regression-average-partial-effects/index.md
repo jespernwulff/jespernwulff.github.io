@@ -6,7 +6,7 @@ publication_types: ["book_chapter"]
 publication: "The SAGE Handbook of Quantitative Research Methods in Business & Management (SAGE Publications)"
 journal: "The SAGE Handbook of Quantitative Research Methods in Business & Management"
 publisher: "SAGE Publications"
-status: "revise_resubmit"
+status: "in_press"
 tab: "book"
 areas: ["glm"]
 tags: ["binary regression", "average partial effects", "generalized linear models"]

@@ -6,7 +6,6 @@ publication_types: ["journal_article"]
 publication: "Asian Business & Management"
 journal: "Asian Business & Management"
 doi: "10.1057/s41291-026-00330-2"
-status: "in_press"
 tab: "articles"
 areas: ["pubadmin"]
 tags: ["state ownership", "performance", "China"]

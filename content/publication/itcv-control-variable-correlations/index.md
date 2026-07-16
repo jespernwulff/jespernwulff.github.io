@@ -10,6 +10,7 @@ issue: "2"
 pages: "801-827"
 doi: "10.1177/01492063241293126"
 url_code: "https://osf.io/entmp/"
+award: "Best Paper, Research Methods Division, Academy of Management 2023"
 tab: "articles"
 areas: ["sensitivity"]
 tags: ["sensitivity analysis", "omitted variable bias", "ITCV"]

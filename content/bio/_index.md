@@ -44,7 +44,7 @@ Jesper holds a PhD in Economics and Business Economics from Aarhus University, a
 
 ## Selected honours
 
-- **2026 & 2018** Best Paper, Research Methods Division, Academy of Management
+- **2026, 2023 & 2018** Best Paper, Research Methods Division, Academy of Management
 - **2025** SAGE/RMD Best Division Conference Paper Award, Academy of Management
 - **2022** Academy of Management Fellows' Award for Responsible Research in Management
 - **2018** Lecturer of the Year, Aarhus BSS
