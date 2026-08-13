@@ -1,10 +1,10 @@
 ---
 title: "From Pixels to Signals: Hierarchical Vision Transformers for Return Prediction"
-date: 2026-06-01
+date: 2026-08-01
 authors: ["Jonas Theill Bøjstrup", "Bezirgen Veliyev", "Jesper N. Wulff"]
 publication_types: ["article"]
-publication: "Journal of Financial Econometrics"
-journal: "Journal of Financial Econometrics"
+publication: "International Journal of Forecasting"
+journal: "International Journal of Forecasting"
 url_preprint: "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6274640"
 status: "under_review"
 tab: "under-review"

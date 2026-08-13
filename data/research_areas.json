@@ -8,6 +8,7 @@
           "name": "Generalized linear models",
           "summary": "Models for proportions and fractional outcomes, log-transformed and exponential models, and binary, two-part, and multinomial models.",
           "papers": [
+            "improvised-to-standardized",
             "binary-regression-average-partial-effects",
             "two-part-models-innovation-sales",
             "modeling-fractions-proportions",
