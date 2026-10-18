@@ -21,6 +21,7 @@
     {{ with .Params.url_code }}<a class="btn btn--ghost" href="{{ . }}" target="_blank" rel="noopener">Code</a>{{ end }}
     {{ with .Params.url_app }}<a class="btn btn--ghost" href="{{ . }}" target="_blank" rel="noopener">Web app</a>{{ end }}
     {{ with .Params.url_video }}<a class="btn btn--ghost" href="{{ . }}" target="_blank" rel="noopener">Video abstract</a>{{ end }}
+    {{ with .Params.url_slides }}<a class="btn btn--ghost" href="{{ . }}" target="_blank" rel="noopener">Slides</a>{{ end }}
     <button class="btn btn--cite" type="button" aria-expanded="false"
       onclick="var b=document.getElementById('citebox');var v=b.hasAttribute('hidden');if(v){b.removeAttribute('hidden')}else{b.setAttribute('hidden','')}this.setAttribute('aria-expanded',v)">{{ i18n "cite" }}</button>
   </div>

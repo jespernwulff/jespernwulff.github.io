@@ -78,6 +78,7 @@ url_source: "https://..."                          # Full text (open-access page
 url_code: "https://github.com/... or https://osf.io/..."  # Code / repository
 url_app: "https://...shinyapps.io/..."            # Web app
 url_video: "https://www.youtube.com/watch?v=..."  # Video abstract
+url_slides: "https://..."                          # Slides (e.g. a talk deck)
 ```
 
 ---

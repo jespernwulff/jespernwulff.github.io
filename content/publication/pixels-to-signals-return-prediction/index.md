@@ -6,6 +6,7 @@ publication_types: ["article"]
 publication: "International Journal of Forecasting"
 journal: "International Journal of Forecasting"
 url_preprint: "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6274640"
+url_slides: "https://jespernwulff.github.io/pixels-to-signals-deck/"
 status: "under_review"
 tab: "under-review"
 areas: ["deeplearning"]

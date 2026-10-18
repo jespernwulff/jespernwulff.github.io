@@ -6,6 +6,7 @@ publication_types: ["article"]
 publication: "Review of Financial Studies"
 journal: "Review of Financial Studies"
 url_preprint: "https://ssrn.com/abstract=7119420"
+url_slides: "https://jespernwulff.github.io/pixels-to-signals-deck/"
 status: "under_review"
 tab: "under-review"
 areas: ["deeplearning"]
