@@ -8,7 +8,6 @@ journal: "Expert Systems with Applications"
 volume: "204"
 pages: "117298"
 doi: "10.1016/j.eswa.2022.117298"
-url_code: "https://cran.r-project.org/package=biokNN"
 tab: "articles"
 areas: ["imputation"]
 tags: ["imputation", "k-nearest neighbors", "multilevel data", "software"]
