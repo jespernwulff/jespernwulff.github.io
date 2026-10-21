@@ -15,7 +15,7 @@ Jesper welcomes inquiries from prospective PhD students and collaborators workin
 
 ## Elsewhere
 
-- [University profile](https://pure.au.dk/portal/en/persons/jwulff@econ.au.dk)
+- [University profile](https://www.au.dk/jwulff@econ.au.dk/)
 - [Google Scholar](https://scholar.google.com/citations?user=53OilqYAAAAJ)
 - [ORCID](https://orcid.org/0000-0002-7976-0939)
 - [GitHub](https://github.com/jespernwulff)

@@ -69,7 +69,7 @@ params:
       url: "https://www.linkedin.com/in/wulffjn/"
     - name: "University profile"
       icon: "university"
-      url: "https://pure.au.dk/portal/en/persons/jwulff@econ.au.dk"
+      url: "https://www.au.dk/jwulff@econ.au.dk/"
 
   # --- GaryKing.org/mysite footer credit + discovery metadata (on by default, opt-out) ---
   mysite:
