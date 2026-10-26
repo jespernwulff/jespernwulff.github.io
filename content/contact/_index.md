@@ -11,8 +11,6 @@ Universitetsbyen 51, Building 1816, Room 449
 8000 Aarhus C
 Denmark
 
-Jesper welcomes inquiries from prospective PhD students and collaborators working on quantitative methods, business analytics, and applied statistics.
-
 ## Elsewhere
 
 - [University profile](https://www.au.dk/jwulff@econ.au.dk/)
