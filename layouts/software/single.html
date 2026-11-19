@@ -9,6 +9,7 @@
     {{ range $i, $l := . }}<a class="btn {{ if eq $i 0 }}btn--primary{{ else }}btn--ghost{{ end }}" href="{{ $l.url }}" target="_blank" rel="noopener">{{ $l.name }}</a>{{ end }}
   </div>
   {{ end }}
+  {{ partial "software_papers.html" . }}
   {{ with .Content }}<div class="prose">{{ . }}</div>{{ end }}
   {{ partial "related_finder.html" . }}
 </article>

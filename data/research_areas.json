@@ -34,6 +34,7 @@
           "papers": [
             "itcv-control-variable-correlations",
             "itcv-robust-standard-errors",
+            "plausibly-exogenous-probit-bounds",
             "diagnostics-without-microdata"
           ]
         },

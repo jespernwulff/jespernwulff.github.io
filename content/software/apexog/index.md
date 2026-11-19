@@ -6,6 +6,7 @@ authors: ["Jesper N. Wulff"]
 summary: "Plausibly exogenous bounds for average partial effects (APEs) and average interaction effects (AIEs) in binary-outcome instrumental-variables models."
 areas: ["glm", "sensitivity"]
 tags: ["instrumental variables", "plausibly exogenous", "sensitivity analysis", "average partial effects", "probit", "R", "Stata"]
+related_papers: ["plausibly-exogenous-probit-bounds"]
 links:
   - name: "Documentation (R & Stata)"
     url: "https://jespernwulff.github.io/apexog/"

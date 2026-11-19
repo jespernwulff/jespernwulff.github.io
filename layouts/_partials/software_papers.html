@@ -1,0 +1,24 @@
+{{- /* Links to the papers behind a software package. Reads related_papers (list of
+       publication folder names) plus legacy related_paper. Unknown slugs are skipped. */ -}}
+{{- $slugs := .Params.related_papers | default slice -}}
+{{- with .Params.related_paper -}}{{- $slugs = $slugs | append . -}}{{- end -}}
+{{- $pubs := slice -}}
+{{- range $s := $slugs -}}
+  {{- with site.GetPage (printf "/publication/%s" $s) -}}{{- $pubs = $pubs | append . -}}{{- end -}}
+{{- end -}}
+{{- with $pubs -}}
+<div class="software-papers">
+  <span class="software-papers__label">{{ if gt (len .) 1 }}Papers{{ else }}Paper{{ end }}</span>
+  <ul>
+    {{- range . }}
+    {{- $names := slice -}}
+    {{- range .Params.authors -}}{{- $names = $names | append (index (last 1 (split . " ")) 0) -}}{{- end -}}
+    {{- $when := .Date.Year -}}
+    {{- if eq .Params.status "in_preparation" -}}{{- $when = "preprint" -}}
+    {{- else if eq .Params.status "under_review" -}}{{- $when = "under review" -}}
+    {{- else if eq .Params.status "in_press" -}}{{- $when = "in press" -}}{{- end }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a> <span class="software-papers__meta">{{ delimit $names ", " " & " }} ({{ $when }}){{ with .Params.journal }}{{ if not (in (slice "SSRN" "arXiv") .) }}, <em>{{ . }}</em>{{ end }}{{ end }}</span></li>
+    {{- end }}
+  </ul>
+</div>
+{{- end -}}

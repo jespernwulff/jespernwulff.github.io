@@ -6,7 +6,7 @@ authors: ["Jesper N. Wulff"]
 summary: "Bootstrap inference for sensemakr sensitivity analysis, including clustered bootstrap and benchmark covariates."
 areas: ["sensitivity"]
 tags: ["sensitivity analysis", "bootstrap", "omitted variable bias", "R", "Stata"]
-related_paper: "itcv-robust-standard-errors"
+related_papers: ["itcv-robust-standard-errors"]
 aliases: ["/software/bootmakr-stata/"]
 links:
   - name: "Documentation (R & Stata)"

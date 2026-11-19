@@ -6,6 +6,7 @@ authors: ["Jesper N. Wulff"]
 summary: "Two- and three-way interaction effects for fitted regression models, with delta-method standard errors — an R port of Marius Radean's Stata command."
 areas: ["glm"]
 tags: ["interaction effects", "marginal effects", "generalized linear models", "R"]
+related_papers: ["improvised-to-standardized"]
 links:
   - name: "GitHub"
     url: "https://github.com/jespernwulff/ginteff"

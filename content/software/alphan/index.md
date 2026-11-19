@@ -6,7 +6,8 @@ authors: ["Jesper N. Wulff"]
 summary: "Set the significance level as a function of sample size using Bayes factors — a Bayesian-frequentist compromise for significance testing."
 areas: ["inference"]
 tags: ["significance testing", "Bayes factors", "sample size", "R", "Stata"]
-related_paper: "alpha-sample-size-bayesian-compromise"
+related_papers: ["alpha-sample-size-bayesian-compromise"]
+# When the R Journal paper (Taylor & Wulff, "alphaN: Calibrating Significance Levels to Bayes Factors for Regression Models in R") is online, add its publication slug to related_papers.
 links:
   - name: "Documentation (R & Stata)"
     url: "https://jespernwulff.github.io/alphaN/"
