@@ -4,12 +4,12 @@
   <h1 class="doc-title">{{ .Title }}</h1>
   {{ with .Params.pkg_kind }}<p class="doc-meta">{{ . }}</p>{{ end }}
   {{ with .Params.authors }}<p class="doc-authors">{{ partial "authors.html" (dict "authors" . "etal" $.Params.et_al) }}</p>{{ end }}
-  {{ with .Params.links }}
+  {{ $links := (.Params.links | default slice) | append (partial "software_papers.html" .) }}
+  {{ with $links }}
   <div class="doc-links">
     {{ range $i, $l := . }}<a class="btn {{ if eq $i 0 }}btn--primary{{ else }}btn--ghost{{ end }}" href="{{ $l.url }}" target="_blank" rel="noopener">{{ $l.name }}</a>{{ end }}
   </div>
   {{ end }}
-  {{ partial "software_papers.html" . }}
   {{ with .Content }}<div class="prose">{{ . }}</div>{{ end }}
   {{ partial "related_finder.html" . }}
 </article>

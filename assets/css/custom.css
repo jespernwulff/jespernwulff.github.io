@@ -379,12 +379,6 @@ a:hover { color: var(--color-link-hover); text-decoration: underline; text-under
 .software-item h2 { font-size: 1.12rem; margin: 0 0 .1rem; }
 .software-item .kind { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--color-clay); }
 .software-item p { margin: .4rem 0 .6rem; color: var(--color-text); }
-.software-papers { margin: .2rem 0 .7rem; font-size: .93rem; }
-.software-papers__label { display: block; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--color-text-muted); margin-bottom: .2rem; }
-.software-papers ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .25rem; }
-.software-papers a { color: var(--color-link); }
-.software-papers__meta { color: var(--color-text-muted); }
-.single .software-papers { margin: 0 0 1.25rem; }
 @media (prefers-reduced-motion: reduce) { .software-item { transition: none; } .software-item:hover { transform: none; } }
 
 /* =========================================================================
