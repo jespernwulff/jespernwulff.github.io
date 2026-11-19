@@ -17,6 +17,6 @@
   {{- with .Params.doi -}}{{- $url = printf "https://doi.org/%s" . -}}{{- end -}}
   {{- $name := "Paper" -}}
   {{- if gt (len $pubs) 1 -}}{{- $name = printf "Paper (%s)" (.Params.journal | default .Date.Year) -}}{{- end -}}
-  {{- $out = $out | append (dict "name" $name "url" $url) -}}
+  {{- $out = $out | append (dict "name" $name "url" (string $url)) -}}
 {{- end -}}
 {{- return $out -}}

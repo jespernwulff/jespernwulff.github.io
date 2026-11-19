@@ -13,7 +13,7 @@
         {{ with .Params.pkg_kind }}<div class="kind">{{ . }}</div>{{ end }}
         <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
         {{ with .Params.summary }}<p>{{ . }}</p>{{ end }}
-        {{ $links := (.Params.links | default slice) | append (partial "software_papers.html" .) }}
+        {{ $links := slice }}{{ range .Params.links }}{{ $links = $links | append (dict "name" .name "url" .url) }}{{ end }}{{ range partial "software_papers.html" . }}{{ $links = $links | append . }}{{ end }}
         {{ with $links }}
         <div class="doc-links">
           {{ range . }}<a class="btn btn--ghost" href="{{ .url }}" target="_blank" rel="noopener">{{ .name }}</a>{{ end }}
