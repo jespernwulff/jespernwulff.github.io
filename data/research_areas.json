@@ -48,15 +48,6 @@
             "common-methodological-mistakes",
             "survey-vs-field-experiments"
           ]
-        },
-        {
-          "id": "imputation",
-          "name": "Multiple imputation",
-          "summary": "Practical guidance and methods for handling missing data, from chained equations to multilevel imputation.",
-          "papers": [
-            "mice-praxis-guidelines-review",
-            "biknn-imputation-multilevel"
-          ]
         }
       ]
     },
